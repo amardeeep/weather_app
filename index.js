@@ -25,4 +25,35 @@ async function weather_data_location(location) {
     condition,
   };
 }
-weather_data_location("Mumbai");
+function create_form() {
+  const div = document.getElementById("search_section");
+  const form = document.createElement("form");
+  const search_label = document.createElement("label");
+  search_label.setAttribute("for", "city");
+  search_label.innerHTML = "City:";
+  const search = document.createElement("input");
+  search.setAttribute("placeholder", "Example: London");
+  search.setAttribute("type", "search");
+  search.setAttribute("id", "city");
+  search.setAttribute("name", "city");
+  form.appendChild(search_label);
+  form.appendChild(search);
+  const button = document.createElement("button");
+  button.setAttribute("type", "submit");
+  button.innerHTML = "Go!";
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const fd = new FormData(form);
+    for (item of fd) {
+      weather_data_location(item);
+    }
+  });
+  form.appendChild(button);
+  div.appendChild(form);
+}
+create_form();
+function populate_dom(obj) {
+  const body = document.querySelector("body");
+  const div = document.createElement("div");
+  div.setAttribute("id", "display");
+}
