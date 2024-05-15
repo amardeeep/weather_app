@@ -1,11 +1,24 @@
 const base_url = "http://api.weatherapi.com/v1";
 const key = "7cf8712574364c31b7240901241405";
-
+async function populate_dom(obj) {
+  const display = document.querySelector(".display");
+  dt = await obj;
+  dt_current = dt.current;
+  dt_location = dt.location;
+  console.log(dt);
+  for (const item in dt_current) {
+    const div = document.createElement("div");
+    div.innerHTML = item + ":" + dt_current[item];
+    div.setAttribute("id", item);
+    display.appendChild(div);
+  }
+}
 async function weather_data_location(location) {
   const url = base_url + "/current.json?key=" + key + "&q=" + location;
 
   const weather_data = await fetch(url);
   const data = await weather_data.json();
+  console.log(data);
   const wind_kph = data.current.wind_kph;
   const feels_like = data.current.feels_like;
   const humidity = data.current.humidity;
@@ -14,7 +27,8 @@ async function weather_data_location(location) {
   const condition = data.condition;
   const country = data.location.country;
   const region = data.location.region;
-  return {
+  return data;
+  /*return (dt = {
     country,
     region,
     wind_kph,
@@ -23,7 +37,7 @@ async function weather_data_location(location) {
     percipitation,
     current_time,
     condition,
-  };
+  })*/
 }
 function create_form() {
   const div = document.getElementById("search_section");
@@ -45,15 +59,14 @@ function create_form() {
     e.preventDefault();
     const fd = new FormData(form);
     for (item of fd) {
-      weather_data_location(item);
+      populate_dom(weather_data_location(item));
     }
   });
+  const celcius_btn = document.createElement("button");
+  celcius_btn.addEventListener("click", function () {});
+  const fahr_btn = document.createElement("button");
+  fahr_btn.addEventListener("click", function () {});
   form.appendChild(button);
   div.appendChild(form);
 }
 create_form();
-function populate_dom(obj) {
-  const body = document.querySelector("body");
-  const div = document.createElement("div");
-  div.setAttribute("id", "display");
-}
