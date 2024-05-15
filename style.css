@@ -32,7 +32,28 @@ body{
     border-radius: 5px;
     
 }
+.display{
+    display: flex;
+    flex-direction: row;
+    
+}
+.right{
+    display: grid;
+    grid-template-rows:50px 30px 30px 30px 30px 80px ;
+    font-size: large;
+    justify-content: center;
+    align-items: center;
+}
+.div_right{
+    text-align: center;
 
+}
+.div_right:nth-child(1){
+    font-size: 30px;
+}
+.div_right:nth-child(6){
+    font-size: 50px;
+}
 
 #search_section{
     position: sticky;
