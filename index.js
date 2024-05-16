@@ -18,6 +18,7 @@ function create_form() {
   form.appendChild(search);
   const button = document.createElement("button");
   button.setAttribute("type", "submit");
+  button.setAttribute("class", "button");
   button.setAttribute("id", "go");
   button.innerHTML = "Go!";
   form.addEventListener("submit", function (e) {
@@ -31,14 +32,29 @@ function create_form() {
   form.appendChild(button);
   div.appendChild(form);
 }
+function loader() {
+  const display = document.querySelector(".display");
+  const loader = document.createElement("div");
+  loader.setAttribute("class", "loader");
+  loader.innerHTML = "Loading!";
+  display.appendChild(loader);
+}
+function remove_loader() {
+  const display = document.querySelector(".display");
+  while (display.hasChildNodes()) {
+    display.removeChild(display.firstChild);
+  }
+}
 create_form();
-
+populate_dom(weather_data_location("Mumbai"));
 async function populate_dom(obj) {
   const display = document.querySelector(".display");
   while (display.hasChildNodes()) {
     display.removeChild(display.firstChild);
   }
+  loader();
   dt = await obj;
+  remove_loader();
   const div_left = document.createElement("div");
   div_left.setAttribute("class", "left");
   function return_temperatures(dt) {
