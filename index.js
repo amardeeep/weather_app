@@ -18,6 +18,7 @@ function create_form() {
   form.appendChild(search);
   const button = document.createElement("button");
   button.setAttribute("type", "submit");
+  button.setAttribute("id", "go");
   button.innerHTML = "Go!";
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -47,20 +48,17 @@ async function populate_dom(obj) {
     };
   }
   const div_t = document.createElement("div");
-
   const temperatures = return_temperatures(dt);
+  div_t.innerHTML = "Temperature(in Celcius) : " + temperatures.temperature_c;
   const celc_btn = document.querySelector(".celcius");
 
   celc_btn.addEventListener("click", function () {
     div_t.innerHTML = "Temperature(in Celcius) : " + temperatures.temperature_c;
-    console.log(temperatures);
-    console.log(div_t);
   });
   const fahr_btn = document.querySelector(".fahr");
   fahr_btn.addEventListener("click", function () {
     div_t.innerHTML =
       "Temperature(in Fahrenheit) : " + temperatures.temperature_f;
-    console.log(div_t);
   });
   div_left.appendChild(div_t);
 
@@ -72,9 +70,6 @@ async function populate_dom(obj) {
     UV: dt.current.uv,
     Location: dt.location.name + "," + dt.location.region,
   };
-  const dt_condition = dt.current.condition;
-
-  const div_text = document.createElement("div");
   //create function to determine day or night
   function return_day_night(dt) {
     const time_string = dt.current.last_updated;
@@ -99,15 +94,14 @@ async function populate_dom(obj) {
       }
     }
   }
-
+  const div_text = document.createElement("div");
+  div_text.setAttribute("id", "text");
+  div_text.innerHTML = dt.current.condition.text;
+  img.setAttribute("id", "icon");
   img.src = url();
   div_left.appendChild(img);
   div_left.appendChild(div_text);
   display.appendChild(div_left);
-  console.log(dt_condition);
-  console.log(dt_curr_use);
-
-  console.log(dt);
   const div_right = document.createElement("div");
   div_right.setAttribute("class", "right");
   for (const item in dt_curr_use) {
