@@ -35,8 +35,10 @@ body{
 .display{
     display: flex;
     flex-direction: row;
-    
+    justify-content: center;
+
 }
+
 .right{
     display: grid;
     grid-template-rows:50px 30px 30px 30px 30px 80px ;
